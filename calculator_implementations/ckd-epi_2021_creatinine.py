@@ -37,7 +37,7 @@ def ckd_epi_2021_explanation(input_parameters):
 
     elif creatinine_val <= 0.9 and gender == "Male":
         explanation += f"Because the patient's gender is male and the creatinine concentration is less than or equal to 0.9 mg/dL, A = 0.9 and B = -0.302.\n"
-        a = 0.7
+        a = 0.9
         b = -0.302
 
     elif creatinine_val > 0.7 and gender == "Female":

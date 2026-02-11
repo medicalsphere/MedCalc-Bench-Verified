@@ -1,4 +1,5 @@
 import json
+import os
 import random
 import steroid_conversion_calculator
 from datetime import datetime, timedelta
@@ -239,7 +240,8 @@ def target_weight():
     return note, input_parameters
 
 
-with open("/Users/nikhilkhandekar/Documents/MedCalc-Bench-Verified/calculator_implementations/name_to_python.json") as file:
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(_script_dir, "name_to_python.json")) as file:
     calc_info  = json.load(file)
 
 problems = {}

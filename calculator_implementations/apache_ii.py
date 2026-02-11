@@ -63,8 +63,8 @@ The total APACHE II score is calculated by summing the points for each criterion
         explanation += f"Because the patient's age is at least 75 years, 6 points are added to the total, making the current total, {score} + 6 = {score + 6}.\n"
         score += 6
 
-    if 'organ_failure_immunocompromise' in input_parameters:
-        if input_parameters['organ_failure_immunocompromise']:
+    if 'organ_failure_or_immunocompromise' in input_parameters:
+        if input_parameters['organ_failure_or_immunocompromise']:
 
             surgery_type = input_parameters.get('surgery_type', None)
 
@@ -77,7 +77,7 @@ The total APACHE II score is calculated by summing the points for each criterion
                 score += 2
 
 
-        elif not input_parameters['organ_failure_immunocompromise']:
+        elif not input_parameters['organ_failure_or_immunocompromise']:
             explanation += f"The patient is reported to not have any organ failure immunocompromise and so 0 points are added to the total, keeping the total at {score} points.\n"
     else:
         explanation += f"The patient note does not report any history on immunocompromise and so we assume this to be false. Hence, 0 points are added to the total, keeping the total at {score} points.\n"

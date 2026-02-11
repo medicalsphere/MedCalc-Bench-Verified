@@ -144,7 +144,7 @@
         "Calculator ID": 44
     },
     "CURB-65 Score for Pneumonia Severity": {
-        "File Path": "calculator_implementations/curb-65.py",
+        "File Path": "calculator_implementations/curb_65.py",
         "Calculator ID": 45
     },
     "Framingham Risk Score for Hard Coronary Heart Disease": {

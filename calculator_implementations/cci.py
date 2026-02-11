@@ -105,7 +105,7 @@ The total score is calculated by summing the points for each criterion.
             cci += 6
             continue
 
-        if parameter == 'liver_diease' and parameter not in input_parameters:
+        if parameter == 'liver_disease' and parameter not in input_parameters:
             explanation +=  f"The patient's liver disease status is not determined and so we assume the value to be 'none or diet-controlled.' No points are added to the score, keeping the current total at {cci}.\n"
             continue
         elif parameter == 'liver_disease' and parameter in input_parameters and input_parameters[parameter] == 'none':

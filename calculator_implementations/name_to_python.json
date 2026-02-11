@@ -89,7 +89,7 @@
         "explanation function": "mrdr_gfr_explanation",
         "calculator name": "MDRD GFR Equation",
         "type": "lab test",
-        "question": "Using the MDRD GFR Equation, what is the patient's Glomerular Filtration Rate (GFR) in terms of mL/min/1.73 m²? If the patient is black, please use the MDRD GFR Equation for Blacks."
+        "question": "Using the MDRD GFR Equation, what is the patient's Glomerular Filtration Rate (GFR) in terms of mL/min/1.73 m²? If the patient is black, please use the MDRD GFR Equation for blacks."
     },
     "10": {
         "sex": "sex",
@@ -99,7 +99,7 @@
         "explanation function": "ibw_explanation",
         "calculator name": "Ideal Body Weight",
         "type": "physical",
-        "question": "Using the Ideal Body Weight Formula, what is the patient's ideal body weight in terms of kg?"
+        "question": "Using the Devine formula, what is the patient's ideal body weight?"
     },
     "11": {
         "Heart Rate or Pulse": "heart_rate",
@@ -286,7 +286,7 @@
         "question": "What is the patient's Glasgow-Blatchford Bleeding score?"
     },
     "28": {
-        "History of severe organ failure or immunocompromise": "severe_organ_failure_or_immunocompromise",
+        "History of severe organ failure or immunocompromise": "organ_failure_or_immunocompromise",
         "age": "age",
         "Temperature": "temperature",
         "Mean arterial pressure": "mean_arterial_pressure",

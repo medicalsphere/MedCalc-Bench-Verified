@@ -28,7 +28,7 @@ The Child-Pugh Score is calculated by summing the points for each criterion.
     encephalopathy_state = input_variables.get('encephalopathy', 'No Encephalopathy')
 
     explanation += f"The patient's INR is {inr}. "
-    bilirubin_exp, bilirubin = unit_converter_new.conversion_explanation(input_variables['bilirubin'][0], 'bilirubin', 548.66, None, input_variables['bilirubin'][1], "mg/dL")
+    bilirubin_exp, bilirubin = unit_converter_new.conversion_explanation(input_variables['bilirubin'][0], 'bilirubin', 584.66, None, input_variables['bilirubin'][1], "mg/dL")
     albumin_exp, albumin = unit_converter_new.conversion_explanation(input_variables['albumin'][0], 'albumin', 66500, None, input_variables['albumin'][1], "g/dL")
 
 

@@ -6,7 +6,8 @@ import json
 import importlib.util
 import ast 
 
-with open("/Users/nikhilkhandekar/Documents/MedCalc-Bench-Verified/calculator_implementations/name_to_python.json") as file:
+_script_dir = os.path.dirname(os.path.abspath(__file__))
+with open(os.path.join(_script_dir, "name_to_python.json")) as file:
     calc_info = json.load(file)
 
 df_test = pd.read_csv("datasets/one_shot_data.csv")

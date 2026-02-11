@@ -68,7 +68,7 @@ The total Caprini Score is calculated by summing the points for each criterion.
     if age <= 40:
         explanation += f"Because the patient's age is less or equal to 40, we do not add any points to the total, keeping the current total at {score}.\n"
     elif 41 <= age <= 60:
-        explanation += f"Because the patient's age is between 61 and 74, we add one point to the current total, making the current total, {score} + 1 = {score + 1}.\n"
+        explanation += f"Because the patient's age is between 41 and 60, we add one point to the current total, making the current total, {score} + 1 = {score + 1}.\n"
         score += 1
     elif 61 <= age <= 74:
         explanation += f"Because the patient's age is between 61 and 74, we add two points to the current total, making the current total, {score} + 2 = {score + 2}.\n"
