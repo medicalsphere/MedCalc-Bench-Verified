@@ -10,7 +10,7 @@ _script_dir = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(_script_dir, "name_to_python.json")) as file:
     calc_info = json.load(file)
 
-df_test = pd.read_csv("datasets/one_shot_data.csv")
+df_test = pd.read_csv("datasets/test_data.csv")
 
 
 csv_props = {"Row Number": [], "Calculator ID": [], "Calculator Name": [], "Category": [], "Output Type": [], "Note ID": [], "Note Type": [], 
@@ -30,11 +30,6 @@ for index, row in df_test.iterrows():
 
     note_type = row["Note Type"]
 
-    if calculator_id == 68:
-        row["Calculator Name"] = "Estimated Date of Conception"
-
-    if calculator_id == 23:
-        row["Question"] = "What is the patient's MeldNa (UNOS/OPTN) score?"
 
     csv_props["Row Number"].append(str(index + 1))
     csv_props["Calculator ID"].append(str(calculator_id))  # Convert to string when adding to csv_props
@@ -164,7 +159,7 @@ for index, row in df_test.iterrows():
   
 
 df_output = pd.DataFrame(csv_props)
-df_output.to_csv("datasets/one_shot_data.csv", index=False)
+df_output.to_csv("datasets/test_data.csv", index=False)
 
 
 
