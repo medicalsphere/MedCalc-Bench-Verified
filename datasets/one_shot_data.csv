@@ -495,7 +495,7 @@ The patient's FeverPain score is 1 points."
 
 1. Age, years: ≤40 = 0 points, 41-60 = +1 point, 61-74 = +2 points, ≥75 = +3 points
 2. Type of surgery: None = 0 points, Minor = +1 point, Major >45 min (laparoscopic or arthroscopic) = +2 points, Elective major lower extremity arthroplasty = +5 points
-3. Recent (≤1 month) event: Major surgery = +1 point, Congestive heart failure (CHF) = +1 point, Sepsis = +1 point, Pneumonia = +1 point, Immobilizing plaster cast = +1 point, Hip, pelvis, or leg fracture = +5 points, Stroke = +5 points, Multiple trauma = +5 points, Acute spinal cord injury causing paralysis = +5 points
+3. Recent (≤1 month) event: Major surgery = +1 point, Congestive heart failure (CHF) = +1 point, Sepsis = +1 point, Pneumonia = +1 point, Immobilizing plaster cast = +2 points, Hip, pelvis, or leg fracture = +5 points, Stroke = +5 points, Multiple trauma = +5 points, Acute spinal cord injury causing paralysis = +5 points
 4. Venous disease or clotting disorder: Varicose veins = +1 point, Current swollen legs = +1 point, Current central venous access = +2 points, History of deep vein thrombosis (DVT) or pulmonary embolism (PE) = +3 points, Family history of thrombosis = +3 points, Positive Factor V Leiden = +3 points, Positive prothrombin 20210A = +3 points, 
     Elevated serum homocysteine = +3 points, Positive lupus anticoagulant = +3 points, Elevated anticardiolipin antibody = +3 points, Heparin-induced thrombocytopenia = +3 points, Other congenital or acquired thrombophilia = +3 points
 5. Mobility: Normal, out of bed = 0 points, Medical patient currently on bed rest = +1 point, Patient confined to bed >72 hours = +2 points
