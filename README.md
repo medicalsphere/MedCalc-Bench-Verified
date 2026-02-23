@@ -25,6 +25,7 @@ uv sync
 ```
 OPENAI_API_KEY=your_openai_key
 ANTHROPIC_API_KEY=your_anthropic_key
+GEMINI_API_KEY=your_gemini_key
 HUGGINGFACE_TOKEN=your_huggingface_token
 ```
 

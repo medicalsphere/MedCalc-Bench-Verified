@@ -24,6 +24,7 @@ dependencies = [
     "nltk==3.8.1",
     "numpy==1.26.4",
     "anthropic>=0.40.0",
+    "google-genai>=1.0.0",
     "python-dotenv>=1.0.0",
     "openai>=1.0.0",
     "openai-parallel-toolkit==0.5.1",

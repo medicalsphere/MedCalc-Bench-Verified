@@ -48,6 +48,13 @@ class LLMInference:
             self.max_length = 200000
             self.tokenizer = tiktoken.get_encoding("cl100k_base")
 
+        elif self._provider == "google":
+            from google import genai as _genai
+            self._google_client = _genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+            self.model = self.llm_name.split('/', 1)[1]
+            self.max_length = 1000000
+            self.tokenizer = tiktoken.get_encoding("cl100k_base")
+
         else:
             from huggingface_hub import login
             login(token=os.getenv("HUGGINGFACE_TOKEN"))
@@ -113,6 +120,29 @@ class LLMInference:
                 params["system"] = system_prompt
             response = self._anthropic_client.messages.create(**params)
             ans = response.content[0].text
+
+        elif self._provider == "google":
+            from google.genai import types as _gtypes
+            system_prompt = None
+            contents = []
+            for msg in messages:
+                if msg["role"] == "system":
+                    system_prompt = msg["content"]
+                else:
+                    role = "user" if msg["role"] == "user" else "model"
+                    contents.append(_gtypes.Content(
+                        role=role,
+                        parts=[_gtypes.Part(text=msg["content"])]
+                    ))
+            config = _gtypes.GenerateContentConfig()
+            if system_prompt:
+                config.system_instruction = system_prompt
+            response = self._google_client.models.generate_content(
+                model=self.model,
+                contents=contents,
+                config=config,
+            )
+            ans = response.text
 
         else:
             stopping_criteria = None
