@@ -7,6 +7,34 @@ This is an updated version that is modified from MedCalc-Bench-v1.2
 
 # MedCalc-Bench Verified
 
+## Setup
+
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
+
+**1. Install uv** (if not already installed):
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**2. Install dependencies:**
+```bash
+uv sync
+```
+
+**3. Configure API keys** by creating a `.env` file in the project root:
+```
+OPENAI_API_KEY=your_openai_key
+ANTHROPIC_API_KEY=your_anthropic_key
+HUGGINGFACE_TOKEN=your_huggingface_token
+```
+
+**4. Run evaluations** using `uv run` from the project root:
+```bash
+uv run python evaluation/run.py --model OpenAI/gpt-4o --prompt zero_shot
+```
+
+---
+
 MedCalc-Bench Verified is a re-verified version of MedCalc-Bench used to benchmark LLMs ability to serve as clinical calculators. Each instance in the dataset consists of a patient note, a question asking to compute a specific clinical value, a final answer value, and a step-by-step solution explaining how the final answer was obtained. Our dataset covers 55 different calculation tasks which are either rule-based calculations or are equation-based calculations. This dataset contains a training dataset of 10,538 instances and a testing dataset of 1,100 instances.
  <br>
 

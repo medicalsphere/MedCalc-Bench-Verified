@@ -5,11 +5,16 @@ import tqdm
 import argparse
 import pandas as pd
 import sys
-from llm_inference import LLMInference
-from evaluate import check_correctness
 import math
 import numpy as np
 import ast
+
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+_ROOT_DIR = os.path.dirname(_SCRIPT_DIR)
+sys.path.insert(0, _SCRIPT_DIR)
+
+from llm_inference import LLMInference
+from evaluate import check_correctness
 from table_stats import compute_overall_accuracy
 
 
@@ -151,6 +156,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Parse arguments')
     parser.add_argument('--model', type=str, help='Specify which model you are using. Options are OpenAI/GPT-4, OpenAI/GPT-3.5-turbo, mistralai/Mistral-7B-Instruct-v0.2, mistralai/Mixtral-8x7B-Instruct-v0.1, meta-llama/Meta-Llama-3-8B-Instruct, meta-llama/Meta-Llama-3-70B-Instruct, epfl-llm/meditron-70b, axiong/PMC_LLaMA_13B')
     parser.add_argument('--prompt', type=str, help='Specify prompt type. Options are direct_answer, zero_shot, one_shot')
+    parser.add_argument('--verbose', action='store_true', help='Print full prompts and model outputs for each sample')
 
     args = parser.parse_args()
 
@@ -159,13 +165,14 @@ if __name__ == "__main__":
 
     output_path = f"{model_name.replace('/', '_')}_{prompt_style}.jsonl"
 
-    if not os.path.exists("outputs"):
-        os.makedirs("outputs")
+    outputs_dir = os.path.join(_SCRIPT_DIR, "outputs")
+    if not os.path.exists(outputs_dir):
+        os.makedirs(outputs_dir)
 
-    if not os.path.exists(os.path.join("outputs", output_path)):
+    if not os.path.exists(os.path.join(outputs_dir, output_path)):
         existing = None
     else:
-        existing = pd.read_json(os.path.join("outputs", output_path), lines=True)
+        existing = pd.read_json(os.path.join(outputs_dir, output_path), lines=True)
         existing["Calculator ID"] = existing["Calculator ID"].astype(str)
         existing["Note ID"] = existing["Note ID"].astype(str)
 
@@ -176,10 +183,10 @@ if __name__ == "__main__":
 
     llm = LLMInference(llm_name=model_name)
 
-    with open("one_shot_finalized_explanation.json", "r") as file:
+    with open(os.path.join(_SCRIPT_DIR, "one_shot_finalized_explanation.json"), "r") as file:
         one_shot_json = json.load(file)
 
-    df = pd.read_csv("../dataset/test_data.csv")
+    df = pd.read_csv(os.path.join(_ROOT_DIR, "datasets", "test_data.csv"))
 
     for index in tqdm.tqdm(range(len(df))):
 
@@ -215,8 +222,9 @@ if __name__ == "__main__":
         elif prompt_style == "direct_answer":
             system, user = direct_answer(patient_note, question)
 
-        print("System:\n", system)
-        print("User:\n", user)
+        if args.verbose:
+            print("System:\n", system)
+            print("User:\n", user)
 
         messages = [
             {"role": "system", "content": system},
@@ -224,14 +232,16 @@ if __name__ == "__main__":
         ]
 
         answer = llm.answer(messages)
-        print(answer)
-       
+        if args.verbose:
+            print(answer)
+
         try:
             answer_value, explanation = extract_answer(answer, int(calculator_id))
 
-            print(answer_value)
-            print(explanation)
-            
+            if args.verbose:
+                print(answer_value)
+                print(explanation)
+
             correctness = check_correctness(answer_value, row["Ground Truth Answer"], calculator_id, row["Upper Limit"], row["Lower Limit"])
 
             status = "Correct" if correctness else "Incorrect"
@@ -244,7 +254,7 @@ if __name__ == "__main__":
                 "Note ID": note_id,
                 "Patient Note": patient_note,
                 "Question": question,
-                "LLM Answer": answer_value, 
+                "LLM Answer": answer_value,
                 "LLM Explanation": explanation,
                 "Ground Truth Answer": row["Ground Truth Answer"],
                 "Ground Truth Explanation": row["Ground Truth Explanation"],
@@ -253,8 +263,8 @@ if __name__ == "__main__":
 
             if prompt_style == "direct_answer":
                 outputs["LLM Explanation"] = "N/A"
-        
-        
+
+
         except Exception as e:
             outputs = {
                 "Row Number": int(row["Row Number"]),
@@ -264,20 +274,21 @@ if __name__ == "__main__":
                 "Note ID": note_id,
                 "Patient Note": patient_note,
                 "Question": question,
-                "LLM Answer": str(e), 
+                "LLM Answer": str(e),
                 "LLM Explanation": str(e),
                 "Ground Truth Answer": row["Ground Truth Answer"],
                 "Ground Truth Explanation": row["Ground Truth Explanation"],
                 "Result": "Incorrect"
             }
-            print(f"error in {calculator_id} {note_id}: "  + str(e))
+            tqdm.tqdm.write(f"error in {calculator_id} {note_id}: {e}")
 
             if prompt_style == "direct_answer":
                 outputs["LLM Explanation"] = "N/A"
 
-        print(outputs)
+        if args.verbose:
+            print(outputs)
         
-        with open(f"outputs/{output_path}", "a") as f:
+        with open(os.path.join(outputs_dir, output_path), "a") as f:
             f.write(json.dumps(outputs) + "\n")
 
     compute_overall_accuracy(output_path, model_name, prompt_style)

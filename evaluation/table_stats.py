@@ -1,12 +1,13 @@
-import json 
+import json
 import numpy as np
 import os
 
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def compute_overall_accuracy(output_path, model_name, prompt_style): 
+def compute_overall_accuracy(output_path, model_name, prompt_style):
     category_accuracy = {}
 
-    with open(f"outputs/{output_path}") as file:
+    with open(os.path.join(_SCRIPT_DIR, "outputs", output_path)) as file:
         for line in file:
             data = json.loads(line)
             
@@ -44,13 +45,14 @@ def compute_overall_accuracy(output_path, model_name, prompt_style):
         "std": overall_std
     }
 
-    if not os.path.exists("results"):
-        os.makedirs("results")
+    results_dir = os.path.join(_SCRIPT_DIR, "results")
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
 
     if "/" in model_name:
         model_name = model_name.split('/')[1]
 
-    with open(f"results/results_{model_name}_{prompt_style}.json", "w") as file:
+    with open(os.path.join(results_dir, f"results_{model_name}_{prompt_style}.json"), "w") as file:
         json.dump(category_stats, file, indent=4)
 
     return category_stats

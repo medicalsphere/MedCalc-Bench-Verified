@@ -11,14 +11,17 @@ import pandas as pd
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import os
-import openai
+from dotenv import load_dotenv
+from openai import OpenAI
+
+load_dotenv()
 from run import extract_answer
 from evaluate import check_correctness
 import numpy as np
 from table_stats import compute_overall_accuracy
 
 
-openai.api_key = os.getenv("OPENAI_API_KEY") 
+_openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 
 def capture_exec_output_and_errors(code):
@@ -71,7 +74,7 @@ def apply_calc(question, patient_note, model_name):
     n = 0
 
     while True:
-        response = openai.ChatCompletion.create(
+        response = _openai_client.chat.completions.create(
                     model=model_name,
                     messages=messages
         )
