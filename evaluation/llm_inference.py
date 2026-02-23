@@ -142,7 +142,10 @@ class LLMInference:
                 contents=contents,
                 config=config,
             )
-            ans = response.text
+            ans = "".join(
+                part.text for part in response.candidates[0].content.parts
+                if part.text is not None
+            )
 
         else:
             stopping_criteria = None
