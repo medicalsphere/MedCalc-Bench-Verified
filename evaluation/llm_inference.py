@@ -55,6 +55,16 @@ class LLMInference:
             self.max_length = 1000000
             self.tokenizer = tiktoken.get_encoding("cl100k_base")
 
+        elif self._provider == "inception":
+            from openai import OpenAI
+            self._inception_client = OpenAI(
+                api_key=os.getenv("INCEPTION_API_KEY"),
+                base_url="https://api.inceptionlabs.ai/v1",
+            )
+            self.model = self.llm_name.split('/', 1)[1]
+            self.max_length = 32768
+            self.tokenizer = tiktoken.get_encoding("cl100k_base")
+
         else:
             from huggingface_hub import login
             login(token=os.getenv("HUGGINGFACE_TOKEN"))
@@ -120,6 +130,13 @@ class LLMInference:
                 params["system"] = system_prompt
             response = self._anthropic_client.messages.create(**params)
             ans = response.content[0].text
+
+        elif self._provider == "inception":
+            response = self._inception_client.chat.completions.create(
+                model=self.model,
+                messages=messages,
+            )
+            ans = response.choices[0].message.content
 
         elif self._provider == "google":
             from google.genai import types as _gtypes
